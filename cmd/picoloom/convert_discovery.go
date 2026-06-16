@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	picoloom "github.com/alnah/picoloom/v2"
+	picoloom "github.com/infinilabs/picoloom/v2"
 )
 
 // Sentinel errors for file discovery.

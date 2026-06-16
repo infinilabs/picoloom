@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	"github.com/alnah/picoloom/v2/internal/hints"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2/internal/hints"
 )
 
 // File permission constants.

@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/alnah/picoloom/v2/internal/config"
-	"github.com/alnah/picoloom/v2/internal/yamlutil"
+	"github.com/infinilabs/picoloom/v2/internal/config"
+	"github.com/infinilabs/picoloom/v2/internal/yamlutil"
 	flag "github.com/spf13/pflag"
 )
 

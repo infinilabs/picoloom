@@ -14,7 +14,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/alnah/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
 )
 
 type stringBoolCase struct {

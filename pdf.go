@@ -10,13 +10,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/fileutil"
-	"github.com/alnah/picoloom/v2/internal/hints"
-	"github.com/alnah/picoloom/v2/internal/pipeline"
-	"github.com/alnah/picoloom/v2/internal/process"
 	"github.com/go-rod/rod"
 	"github.com/go-rod/rod/lib/launcher"
 	"github.com/go-rod/rod/lib/proto"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/hints"
+	"github.com/infinilabs/picoloom/v2/internal/pipeline"
+	"github.com/infinilabs/picoloom/v2/internal/process"
 )
 
 // browserCloseTimeout is the maximum time to wait for browser.Close() before force-killing.
@@ -69,15 +69,16 @@ var pageDimensions = map[string]struct{ width, height float64 }{
 // rodRenderer implements pdfRenderer using go-rod.
 // Rod automatically downloads Chromium on first run if not found.
 type rodRenderer struct {
-	browser   *rod.Browser
-	launcher  *launcher.Launcher
-	timeout   time.Duration
-	closeOnce sync.Once
+	browser         *rod.Browser
+	launcher        *launcher.Launcher
+	timeout         time.Duration
+	browserRevision int
+	closeOnce       sync.Once
 }
 
 // newRodRenderer creates a rodRenderer with the given timeout.
-func newRodRenderer(timeout time.Duration) *rodRenderer {
-	return &rodRenderer{timeout: timeout}
+func newRodRenderer(timeout time.Duration, browserRevision int) *rodRenderer {
+	return &rodRenderer{timeout: timeout, browserRevision: browserRevision}
 }
 
 // ensureBrowser lazily connects to the browser.
@@ -96,6 +97,9 @@ func (r *rodRenderer) ensureBrowser(ctx context.Context) error {
 	// Leakless(false) prevents hanging on macOS - see github.com/go-rod/rod/issues/210
 	// We compensate by explicitly calling Kill() and Cleanup() in Close().
 	l := launcher.New().Context(ctx).Headless(true).Leakless(false).Set("disable-gpu")
+	if r.browserRevision > 0 {
+		l = l.Revision(r.browserRevision)
+	}
 
 	// Allow disabling sandbox for CI/Docker environments that lack kernel support.
 	if os.Getenv("ROD_NO_SANDBOX") == "1" {
@@ -384,9 +388,9 @@ type rodConverter struct {
 }
 
 // newRodConverter creates a rodConverter with production renderer.
-func newRodConverter(timeout time.Duration) *rodConverter {
+func newRodConverter(timeout time.Duration, browserRevision int) *rodConverter {
 	return &rodConverter{
-		renderer: newRodRenderer(timeout),
+		renderer: newRodRenderer(timeout, browserRevision),
 	}
 }
 

@@ -45,7 +45,7 @@ func example() {
 	got, replacements := rewriteContent(filepath.Join("pkg", "example.go"), input)
 	want := `package picoloom_test
 
-import picoloom "github.com/alnah/picoloom/v2"
+import picoloom "github.com/infinilabs/picoloom/v2"
 
 func example() {
 	_ = picoloom.PageSizeA4

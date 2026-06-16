@@ -16,7 +16,7 @@ import (
 
 const (
 	oldModulePath = "github.com/alnah/go-md2pdf"
-	newModulePath = "github.com/alnah/picoloom/v2"
+	newModulePath = "github.com/infinilabs/picoloom/v2"
 )
 
 var (
@@ -250,7 +250,7 @@ func replacementPairs(path string) []replacementPair {
 			replacementPair{old: "package md2pdf_test", new: "package picoloom_test"},
 			replacementPair{old: "package md2pdf", new: "package picoloom"},
 			replacementPair{old: "md2pdf.", new: "picoloom."},
-			replacementPair{old: `md2pdf "github.com/alnah/picoloom/v2"`, new: `picoloom "github.com/alnah/picoloom/v2"`},
+			replacementPair{old: `md2pdf "github.com/infinilabs/picoloom/v2"`, new: `picoloom "github.com/infinilabs/picoloom/v2"`},
 		)
 	}
 

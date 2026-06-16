@@ -1,4 +1,4 @@
-module github.com/alnah/picoloom/v2
+module github.com/infinilabs/picoloom/v2
 
 go 1.25.4
 

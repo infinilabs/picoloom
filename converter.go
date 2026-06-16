@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/alnah/picoloom/v2/internal/assets"
-	"github.com/alnah/picoloom/v2/internal/pipeline"
-	"github.com/alnah/picoloom/v2/internal/styleinput"
+	"github.com/infinilabs/picoloom/v2/internal/assets"
+	"github.com/infinilabs/picoloom/v2/internal/pipeline"
+	"github.com/infinilabs/picoloom/v2/internal/styleinput"
 )
 
 // Compile-time interface implementation checks.
@@ -141,7 +141,7 @@ func NewConverter(opts ...Option) (*Converter, error) {
 
 	// Create PDF converter if not injected (e.g., by tests)
 	if c.pdfConverter == nil {
-		c.pdfConverter = newRodConverter(c.cfg.timeout)
+		c.pdfConverter = newRodConverter(c.cfg.timeout, c.cfg.browserRevision)
 	}
 
 	return c, nil

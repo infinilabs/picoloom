@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	configpkg "github.com/alnah/picoloom/v2/internal/config"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	configpkg "github.com/infinilabs/picoloom/v2/internal/config"
 )
 
 type publicConfigValidator interface {

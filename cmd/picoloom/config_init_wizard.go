@@ -7,9 +7,9 @@ import (
 	"io"
 	"strings"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	"github.com/alnah/picoloom/v2/internal/config"
-	"github.com/alnah/picoloom/v2/internal/yamlutil"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2/internal/config"
+	"github.com/infinilabs/picoloom/v2/internal/yamlutil"
 )
 
 // configInitAnswers captures wizard decisions before materializing final config.

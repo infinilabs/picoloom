@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/alnah/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
 )
 
 // IsInContainer detects if running inside a Docker container or similar.

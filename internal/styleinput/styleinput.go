@@ -2,7 +2,7 @@
 // resolve style names, files, and inline CSS through one decision path.
 package styleinput
 
-import "github.com/alnah/picoloom/v2/internal/fileutil"
+import "github.com/infinilabs/picoloom/v2/internal/fileutil"
 
 // Source identifies how a style input should be resolved.
 type Source int

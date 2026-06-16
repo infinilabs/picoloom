@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/alnah/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2"
 )
 
 // Example demonstrates basic markdown to HTML conversion.

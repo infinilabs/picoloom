@@ -3,7 +3,7 @@ package picoloom
 import (
 	"errors"
 
-	"github.com/alnah/picoloom/v2/internal/assets"
+	"github.com/infinilabs/picoloom/v2/internal/assets"
 )
 
 // Asset name constants for built-in styles and templates.

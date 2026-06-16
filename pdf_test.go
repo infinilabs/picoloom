@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/fileutil"
-	"github.com/alnah/picoloom/v2/internal/pipeline"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/pipeline"
 )
 
 // ---------------------------------------------------------------------------
@@ -169,7 +169,7 @@ func TestRodConverter_ToPDF_ContextCancellation(t *testing.T) {
 func TestNewRodConverter(t *testing.T) {
 	t.Parallel()
 
-	converter := newRodConverter(defaultTimeout)
+	converter := newRodConverter(defaultTimeout, 0)
 
 	if converter.renderer == nil {
 		t.Fatalf("newRodConverter(%v).renderer = nil, want non-nil", defaultTimeout)
@@ -255,7 +255,7 @@ func TestRenderOperationContext(t *testing.T) {
 func TestRodRenderer_EnsureBrowser_ContextCanceled(t *testing.T) {
 	t.Parallel()
 
-	renderer := newRodRenderer(defaultTimeout)
+	renderer := newRodRenderer(defaultTimeout, 0)
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 
@@ -569,7 +569,7 @@ func TestResolvePageDimensions(t *testing.T) {
 func TestRodRenderer_Close_Idempotent(t *testing.T) {
 	t.Parallel()
 
-	renderer := newRodRenderer(defaultTimeout)
+	renderer := newRodRenderer(defaultTimeout, 0)
 
 	// Multiple calls should not panic and all should succeed
 	err1 := renderer.Close()

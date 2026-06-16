@@ -21,9 +21,9 @@ import (
 	"testing"
 	"time"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	"github.com/alnah/picoloom/v2/internal/dateutil"
-	"github.com/alnah/picoloom/v2/internal/fileutil"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2/internal/dateutil"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
 )
 
 // ---------------------------------------------------------------------------

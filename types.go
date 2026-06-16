@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/assets"
-	"github.com/alnah/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/assets"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
 )
 
 // Page size constants.
@@ -335,11 +335,12 @@ type Option func(*Converter)
 
 // converterConfig holds internal configuration for Converter.
 type converterConfig struct {
-	timeout       time.Duration
-	templateSet   *assets.TemplateSet
-	assetPath     string // Path for WithAssetPath, resolved in New()
-	styleInput    string // Raw input for WithStyle (name, path, or CSS content)
-	resolvedStyle string // CSS content after resolution in New()
+	timeout         time.Duration
+	browserRevision int
+	templateSet     *assets.TemplateSet
+	assetPath       string // Path for WithAssetPath, resolved in New()
+	styleInput      string // Raw input for WithStyle (name, path, or CSS content)
+	resolvedStyle   string // CSS content after resolution in New()
 }
 
 // defaultTimeout is used when no timeout is specified.
@@ -353,6 +354,17 @@ func WithTimeout(d time.Duration) Option {
 	}
 	return func(c *Converter) {
 		c.cfg.timeout = d
+	}
+}
+
+// WithBrowserRevision sets the Chromium snapshot revision used by Rod when it
+// automatically downloads a managed browser. A zero value uses Rod's default.
+func WithBrowserRevision(revision int) Option {
+	if revision < 0 {
+		panic("md2pdf: WithBrowserRevision revision must not be negative")
+	}
+	return func(c *Converter) {
+		c.cfg.browserRevision = revision
 	}
 }
 

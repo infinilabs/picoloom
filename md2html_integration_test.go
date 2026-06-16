@@ -13,7 +13,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/alnah/picoloom/v2/internal/pipeline"
+	"github.com/infinilabs/picoloom/v2/internal/pipeline"
 )
 
 // ---------------------------------------------------------------------------

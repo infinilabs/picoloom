@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	"github.com/alnah/picoloom/v2/internal/dateutil"
-	"github.com/alnah/picoloom/v2/internal/fileutil"
-	"github.com/alnah/picoloom/v2/internal/hints"
-	"github.com/alnah/picoloom/v2/internal/yamlutil"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2/internal/dateutil"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/hints"
+	"github.com/infinilabs/picoloom/v2/internal/yamlutil"
 )
 
 // Sentinel errors for config operations.

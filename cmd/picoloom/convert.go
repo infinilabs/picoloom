@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	picoloom "github.com/alnah/picoloom/v2"
-	"github.com/alnah/picoloom/v2/internal/config"
-	"github.com/alnah/picoloom/v2/internal/dateutil"
-	"github.com/alnah/picoloom/v2/internal/fileutil"
-	"github.com/alnah/picoloom/v2/internal/styleinput"
+	picoloom "github.com/infinilabs/picoloom/v2"
+	"github.com/infinilabs/picoloom/v2/internal/config"
+	"github.com/infinilabs/picoloom/v2/internal/dateutil"
+	"github.com/infinilabs/picoloom/v2/internal/fileutil"
+	"github.com/infinilabs/picoloom/v2/internal/styleinput"
 )
 
 // runConvert orchestrates the conversion process.

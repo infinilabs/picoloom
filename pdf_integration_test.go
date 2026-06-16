@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/pipeline"
+	"github.com/infinilabs/picoloom/v2/internal/pipeline"
 )
 
 // ---------------------------------------------------------------------------
@@ -63,7 +63,7 @@ func TestRodConverter_ToPDF_Integration(t *testing.T) {
 <body><h1>Hello, World!</h1><p>This is a test document.</p></body>
 </html>`
 
-		converter := newRodConverter(defaultTimeout)
+		converter := newRodConverter(defaultTimeout, 0)
 		defer converter.Close()
 		data, err := converter.ToPDF(ctx, html, nil)
 		if err != nil {
@@ -86,7 +86,7 @@ func TestRodConverter_ToPDF_Integration(t *testing.T) {
 		css := "h1 { color: blue; font-size: 24px; }"
 		htmlWithCSS := injector.InjectCSS(ctx, html, css)
 
-		converter := newRodConverter(defaultTimeout)
+		converter := newRodConverter(defaultTimeout, 0)
 		defer converter.Close()
 		data, err := converter.ToPDF(ctx, htmlWithCSS, nil)
 		if err != nil {
@@ -105,7 +105,7 @@ func TestRodConverter_ToPDF_Integration(t *testing.T) {
 <body><h1>Document with Footer</h1></body>
 </html>`
 
-		converter := newRodConverter(defaultTimeout)
+		converter := newRodConverter(defaultTimeout, 0)
 		defer converter.Close()
 		opts := &pdfOptions{
 			Footer: &pipeline.FooterData{

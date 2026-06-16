@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/dateutil"
+	"github.com/infinilabs/picoloom/v2/internal/dateutil"
 )
 
 // ---------------------------------------------------------------------------

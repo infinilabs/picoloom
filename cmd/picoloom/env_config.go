@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alnah/picoloom/v2/internal/config"
+	"github.com/infinilabs/picoloom/v2/internal/config"
 )
 
 // envConfig holds configuration from environment variables.

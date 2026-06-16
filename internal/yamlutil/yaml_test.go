@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/alnah/picoloom/v2/internal/yamlutil"
+	"github.com/infinilabs/picoloom/v2/internal/yamlutil"
 )
 
 type testConfig struct {

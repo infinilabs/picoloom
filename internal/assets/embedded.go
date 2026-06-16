@@ -7,7 +7,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/alnah/picoloom/v2/internal/hints"
+	"github.com/infinilabs/picoloom/v2/internal/hints"
 )
 
 //go:embed styles/*
