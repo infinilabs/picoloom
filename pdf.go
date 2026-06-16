@@ -97,19 +97,22 @@ func (r *rodRenderer) ensureBrowser(ctx context.Context) error {
 	// Leakless(false) prevents hanging on macOS - see github.com/go-rod/rod/issues/210
 	// We compensate by explicitly calling Kill() and Cleanup() in Close().
 	l := launcher.New().Context(ctx).Headless(true).Leakless(false).Set("disable-gpu")
-	if r.browserRevision > 0 {
+
+	// Browser selection priority:
+	// 1. ROD_BROWSER_BIN environment variable (explicit override)
+	// 2. Locally installed Chrome/Chromium/Edge (avoids downloading)
+	// 3. Managed Chromium download with the specified revision
+	if bin := os.Getenv("ROD_BROWSER_BIN"); bin != "" {
+		l = l.Bin(bin)
+	} else if bin, found := launcher.LookPath(); found && bin != "" {
+		l = l.Bin(bin)
+	} else if r.browserRevision > 0 {
 		l = l.Revision(r.browserRevision)
 	}
 
 	// Allow disabling sandbox for CI/Docker environments that lack kernel support.
 	if os.Getenv("ROD_NO_SANDBOX") == "1" {
 		l = l.NoSandbox(true)
-	}
-
-	// Optional: allow explicit browser override for CI/debugging.
-	// DO NOT auto-detect system Chrome - it causes corruption issues.
-	if bin := os.Getenv("ROD_BROWSER_BIN"); bin != "" {
-		l = l.Bin(bin)
 	}
 
 	u, err := l.Launch()
