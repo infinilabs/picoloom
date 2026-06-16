@@ -90,7 +90,7 @@
 }
 
 body {
-  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-family: 'Source Sans 3', system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
   font-size: var(--font-size-base);
   line-height: var(--line-height);
   color: var(--color-fg-default);
