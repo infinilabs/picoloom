@@ -96,7 +96,12 @@ func (r *rodRenderer) ensureBrowser(ctx context.Context) error {
 	// Configure launcher
 	// Leakless(false) prevents hanging on macOS - see github.com/go-rod/rod/issues/210
 	// We compensate by explicitly calling Kill() and Cleanup() in Close().
-	l := launcher.New().Context(ctx).Headless(true).Leakless(false).Set("disable-gpu")
+	//
+	// allow-file-access-from-files is required when the generated HTML references
+	// local KaTeX resources via file:// URLs (e.g. file:///path/to/katex.min.css).
+	// Without this flag Chrome's same-origin policy blocks file:// sub-resources
+	// loaded from a file:// page, leaving math formulas unrendered.
+	l := launcher.New().Context(ctx).Headless(true).Leakless(false).Set("disable-gpu").Set("allow-file-access-from-files")
 
 	// Browser selection priority:
 	// 1. ROD_BROWSER_BIN environment variable (explicit override)

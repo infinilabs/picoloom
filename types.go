@@ -341,6 +341,7 @@ type converterConfig struct {
 	assetPath       string // Path for WithAssetPath, resolved in New()
 	styleInput      string // Raw input for WithStyle (name, path, or CSS content)
 	resolvedStyle   string // CSS content after resolution in New()
+	katexPath       string // Path to local KaTeX installation for math rendering
 }
 
 // defaultTimeout is used when no timeout is specified.
@@ -430,5 +431,16 @@ func WithTemplateSet(ts *TemplateSet) Option {
 				Signature: ts.Signature,
 			}
 		}
+	}
+}
+
+// WithKaTeXPath sets the path to a local KaTeX installation that will be
+// injected into the generated HTML <head> when math nodes are present.
+// The path should point to the directory containing katex.min.css,
+// katex.min.js and the contrib/ sub-directory.
+// A relative path is resolved to an absolute path at converter creation time.
+func WithKaTeXPath(path string) Option {
+	return func(c *Converter) {
+		c.cfg.katexPath = path
 	}
 }
