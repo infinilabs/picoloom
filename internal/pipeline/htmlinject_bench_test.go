@@ -208,7 +208,7 @@ func BenchmarkGenerateNumberedTOC(b *testing.B) {
 			b.ResetTimer()
 
 			for i := 0; i < b.N; i++ {
-				result := generateNumberedTOC(headings, "Table of Contents")
+				result := generateTOC(headings, "Table of Contents", true)
 				_ = result
 			}
 		})

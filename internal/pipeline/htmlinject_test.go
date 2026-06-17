@@ -1138,22 +1138,22 @@ func TestGenerateNumberedTOC(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			got := generateNumberedTOC(tt.headings, tt.title)
+			got := generateTOC(tt.headings, tt.title, true)
 
 			if tt.wantEmpty {
 				if got != "" {
-					t.Errorf("generateNumberedTOC(%v, %q) = %q, want empty", tt.headings, tt.title, got)
+					t.Errorf("generateTOC(%v, %q, true) = %q, want empty", tt.headings, tt.title, got)
 				}
 				return
 			}
 
 			if got == "" {
-				t.Fatal("generateNumberedTOC() = empty, want HTML")
+				t.Fatal("generateTOC() = empty, want HTML")
 			}
 
 			for _, want := range tt.wantContains {
 				if !strings.Contains(got, want) {
-					t.Errorf("generateNumberedTOC() missing %q\nGot:\n%s", want, got)
+					t.Errorf("generateTOC() missing %q\nGot:\n%s", want, got)
 				}
 			}
 		})

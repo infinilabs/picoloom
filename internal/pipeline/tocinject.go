@@ -12,8 +12,9 @@ import (
 // TOCData holds TOC configuration for injection.
 type TOCData struct {
 	Title    string
-	MinDepth int // Minimum heading level (default: 2, skips H1)
-	MaxDepth int // Maximum heading level (default: 3)
+	MinDepth int  // Minimum heading level (default: 2, skips H1)
+	MaxDepth int  // Maximum heading level (default: 3)
+	Numbered bool // Whether to prepend hierarchical numbers (default: true)
 }
 
 // TOCInjector defines the contract for TOC injection into HTML.
@@ -118,9 +119,10 @@ func (n *numberingState) next(level int) (numStr string, effectiveDepth int) {
 	return strings.Join(parts, ".") + ".", effectiveDepth
 }
 
-// generateNumberedTOC creates HTML for a numbered table of contents.
+// generateTOC creates HTML for a table of contents.
 // Uses <div> elements instead of <ul>/<li> to avoid CSS list-style conflicts.
-func generateNumberedTOC(headings []headingInfo, title string) string {
+// When numbered is true, hierarchical numbers like "1.1." are prepended.
+func generateTOC(headings []headingInfo, title string, numbered bool) string {
 	if len(headings) == 0 {
 		return ""
 	}
@@ -136,11 +138,21 @@ func generateNumberedTOC(headings []headingInfo, title string) string {
 
 	buf.WriteString(`<div class="toc-list">`)
 
-	numbering := newNumberingState()
+	var numbering *numberingState
+	if numbered {
+		numbering = newNumberingState()
+	}
 
 	for _, h := range headings {
-		// Get number and effective depth (handles normalization and gap skipping)
-		num, effectiveDepth := numbering.next(h.Level)
+		var num string
+		var effectiveDepth int
+
+		if numbered {
+			num, effectiveDepth = numbering.next(h.Level)
+		} else {
+			// Without numbering, compute effective depth for indentation only.
+			effectiveDepth = h.Level
+		}
 
 		// Calculate indentation: (depth - 1) * 1.5em
 		indent := float64(effectiveDepth-1) * 1.5
@@ -153,8 +165,10 @@ func generateNumberedTOC(headings []headingInfo, title string) string {
 		buf.WriteString(`><a href="#`)
 		buf.WriteString(html.EscapeString(h.ID))
 		buf.WriteString(`">`)
-		buf.WriteString(num)
-		buf.WriteString(` `)
+		if numbered {
+			buf.WriteString(num)
+			buf.WriteString(` `)
+		}
 		buf.WriteString(html.EscapeString(h.Text))
 		buf.WriteString(`</a></div>`)
 	}
@@ -190,7 +204,7 @@ func (t *TOCInjection) InjectTOC(ctx context.Context, htmlContent string, data *
 	}
 
 	// Generate TOC HTML
-	tocHTML := generateNumberedTOC(headings, data.Title)
+	tocHTML := generateTOC(headings, data.Title, data.Numbered)
 	if tocHTML == "" {
 		return htmlContent, nil
 	}

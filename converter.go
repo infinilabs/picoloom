@@ -411,6 +411,7 @@ func toTOCData(t *TOC) *pipeline.TOCData {
 		Title:    t.Title,
 		MinDepth: minDepth,
 		MaxDepth: maxDepth,
+		Numbered: !t.NoNumber,
 	}
 }
 

@@ -229,6 +229,7 @@ type TOC struct {
 	Title    string // Title above TOC (empty = no title)
 	MinDepth int    // 1-6, minimum heading level to include (default: 2, skips H1)
 	MaxDepth int    // 1-6, maximum heading level to include (default: 3)
+	NoNumber bool   // When true, suppress hierarchical numbering in TOC entries
 }
 
 // Validate checks that TOC settings are valid.
