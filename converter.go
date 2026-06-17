@@ -3,7 +3,10 @@ package picoloom
 import (
 	"context"
 	"fmt"
+	"net/url"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/infinilabs/picoloom/v2/internal/assets"
 	"github.com/infinilabs/picoloom/v2/internal/pipeline"
@@ -195,6 +198,9 @@ func (c *Converter) renderHTML(ctx context.Context, input Input) (string, error)
 	htmlContent, err := c.htmlConverter.ToHTML(ctx, mdContent)
 	if err != nil {
 		return "", fmt.Errorf("converting to HTML: %w", err)
+	}
+	if c.cfg.katexPath != "" {
+		htmlContent = injectKaTeX(htmlContent, c.cfg.katexPath)
 	}
 	if input.SourceDir != "" {
 		htmlContent, err = pipeline.RewriteRelativePaths(htmlContent, input.SourceDir)
@@ -406,4 +412,39 @@ func toTOCData(t *TOC) *pipeline.TOCData {
 		MinDepth: minDepth,
 		MaxDepth: maxDepth,
 	}
+}
+
+// injectKaTeX inserts KaTeX CSS and JS links before </head> in the given HTML.
+// The katexPath is resolved to an absolute path so the file:// URLs are valid
+// regardless of the working directory when headless Chrome is launched.
+func injectKaTeX(htmlContent, katexPath string) string {
+	absPath, err := filepath.Abs(katexPath)
+	if err != nil {
+		absPath = katexPath
+	}
+
+	cssURL := fileURL(filepath.Join(absPath, "katex.min.css"))
+	jsURL := fileURL(filepath.Join(absPath, "katex.min.js"))
+	autoRenderURL := fileURL(filepath.Join(absPath, "contrib", "auto-render.min.js"))
+
+	katexHead := fmt.Sprintf(`<link rel="stylesheet" href="%s">
+<script defer src="%s"></script>
+<script defer src="%s"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});"></script>`, cssURL, jsURL, autoRenderURL)
+
+	result := strings.Replace(htmlContent, "</head>", katexHead+"\n</head>", 1)
+	if result == htmlContent {
+		// </head> was not found; fall back to prepending before <body>.
+		result = strings.Replace(htmlContent, "<body>", katexHead+"\n<body>", 1)
+	}
+	return result
+}
+
+// fileURL returns a properly encoded file:// URL for the given local path.
+func fileURL(path string) string {
+	u := &url.URL{Scheme: "file", Path: path}
+	return u.String()
 }

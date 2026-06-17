@@ -39,12 +39,13 @@ type GoldmarkConverter struct {
 	md goldmark.Markdown
 }
 
-// NewGoldmarkConverter creates a GoldmarkConverter with GFM extensions and syntax highlighting.
+// NewGoldmarkConverter creates a GoldmarkConverter with GFM extensions, syntax highlighting, and math support.
 func NewGoldmarkConverter() *GoldmarkConverter {
 	md := goldmark.New(
 		goldmark.WithExtensions(
-			extension.GFM,      // Tables, strikethrough, autolinks, task lists
-			extension.Footnote, // [^1] footnotes
+			extension.GFM,       // Tables, strikethrough, autolinks, task lists
+			extension.Footnote,  // [^1] footnotes
+			NewMathExtension(), // $...$ and $$...$$ math support
 			highlighting.NewHighlighting(
 				highlighting.WithFormatOptions(
 					chromahtml.WithClasses(true), // CSS classes for smaller HTML and external stylesheet control
